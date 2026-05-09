@@ -1,0 +1,5 @@
+# GitHub Pages config
+# If using a custom domain, replace the CNAME file content
+# For plain github.io hosting, leave this empty or remove
+
+theme: null
