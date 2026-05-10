@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sajid Kiani — SOC Lead, Detection Engineer, Cybersecurity Consultant with 10+ years experience in SOC operations, Splunk, DFIR, and Threat Hunting.">
+<meta name="description" content="Sajid Kiani — SOC Consultant specializing in Detection Engineering, SOC Maturity, and AI Security. 10+ years in SOC operations, Splunk, DFIR, Threat Hunting, and LLM security.">
 <meta name="robots" content="index, follow">
 <!-- Security headers via meta (GitHub Pages doesn't support server headers natively) -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<!-- CSP: allow only CDNs used, no inline eval -->
+<!-- CSP configured for static hosting with required external resources. Further hardening recommended if inline scripts are removed. -->
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';
   script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
@@ -22,7 +22,11 @@
   base-uri 'self';
   form-action 'self';
 ">
-<title>Sajid Kiani — SOC Lead & Detection Engineer</title>
+<title>Sajid Kiani — SOC Consultant | Detection Engineering & AI Security</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
 <!-- Fonts: IBM Plex Mono for terminal feel + Space Grotesk for body (cybersec aesthetic) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,8 +34,6 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <!-- Three.js for 3D particle field -->
-<!-- SRI NOTE: Replace integrity= values by running: curl -sL URL | openssl dgst -sha384 -binary | openssl base64 -A | sed 's/^/sha384-/' -->
-<!-- Or use https://www.srihash.org to generate hashes for these exact URLs -->
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
   crossorigin="anonymous"
@@ -520,6 +522,41 @@ section {
 .skill-tag.hot { border-color: rgba(0,255,157,0.3); color: var(--accent2); }
 .skill-tag.fire { border-color: rgba(255,107,53,0.3); color: var(--accent3); }
 
+/* ─── Services ─── */
+#services { background: var(--bg); }
+
+/* ─── Featured Work ─── */
+#featured { background: var(--bg2); }
+.featured-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.featured-card:hover { border-color: var(--border2); box-shadow: var(--glow2); }
+.featured-card.accent-cyan { border-top: 2px solid var(--accent); }
+.featured-card.accent-green { border-top: 2px solid var(--accent2); }
+.featured-card.accent-orange { border-top: 2px solid var(--accent3); }
+.featured-card-cat {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.featured-card-cat.cyan { color: var(--accent); }
+.featured-card-cat.green { color: var(--accent2); }
+.featured-card-cat.orange { color: var(--accent3); }
+.featured-card h3 {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  line-height: 1.3;
+}
+.featured-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
 /* ─── Writeups ─── */
 #writeups { background: var(--bg3); }
 .writeup-tabs {
@@ -736,11 +773,48 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
+/* ─── Hamburger ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: var(--accent);
+  transition: all 0.25s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
 /* ─── Mobile ─── */
 @media (max-width: 768px) {
   nav { padding: 0 1.5rem; }
-  .nav-links { gap: 1.5rem; }
-  .nav-links a { font-size: 0.65rem; }
+  .nav-hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 64px; left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(5,10,14,0.97);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+    padding: 1rem 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+  }
   section { padding: 90px 1.5rem 60px; }
   #hero { padding: 90px 1.5rem 60px; }
   .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -780,10 +854,15 @@ body::before {
 <!-- Navigation -->
 <nav role="navigation" aria-label="Main navigation">
   <a href="#hero" class="nav-logo">SK<span>_portfolio</span></a>
+  <button class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false" onclick="this.classList.toggle('open');this.setAttribute('aria-expanded',this.classList.contains('open'));document.querySelector('.nav-links').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#featured">Work</a></li>
     <li><a href="#writeups">Writeups</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -791,11 +870,11 @@ body::before {
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section id="hero" aria-label="Introduction">
-  <div class="hero-tag">Security Operations · Detection Engineering · SOC Leadership</div>
+  <div class="hero-tag">SOC Maturity · Detection Engineering · AI Security</div>
   <h1 class="hero-name">Sajid<br><span class="accent">Kiani</span></h1>
-  <p class="hero-role">SOC Consultant</p>
+  <p class="hero-role">SOC Consultant | Detection Engineering, SOC Maturity &amp; AI Security Specialist</p>
   <p class="hero-desc">
-    10+ years building and maturing Security Operations Centers across enterprise telecom and managed security environments. Based in Riyadh, KSA.
+    Cybersecurity professional with 10+ years of experience across SOC operations, detection engineering, threat hunting, incident response, Splunk SIEM, cyber threat intelligence, SOC maturity improvement, and emerging AI/LLM security in telecom and managed security environments.
   </p>
   <div class="hero-stats">
     <div>
@@ -803,12 +882,8 @@ body::before {
       <div class="stat-label">Years in Cyber</div>
     </div>
     <div>
-      <div class="stat-num">8K</div>
-      <div class="stat-label">LinkedIn Followers</div>
-    </div>
-    <div>
-      <div class="stat-num">15+</div>
-      <div class="stat-label">Splunk Use Cases</div>
+      <div class="stat-num">8K+</div>
+      <div class="stat-label">Cybersecurity Reach</div>
     </div>
     <div>
       <div class="stat-num">5</div>
@@ -826,8 +901,8 @@ body::before {
 </section>
 
 <!-- ═══════════════════ ABOUT / CV ═══════════════════ -->
-<section id="about" aria-label="About and CV">
-  <div class="section-label">About &amp; CV</div>
+<section id="about" aria-label="About">
+  <div class="section-label">About</div>
   <h2 class="section-title">Who I Am</h2>
   <div class="section-line"></div>
 
@@ -837,7 +912,7 @@ body::before {
       <div class="cv-card" role="complementary" aria-label="Contact information">
         <div class="cv-avatar" aria-hidden="true">SK</div>
         <div class="cv-name">Sajid Kiani</div>
-        <div class="cv-title">Acting SOC Manager · SOC Lead</div>
+        <div class="cv-title">SOC Consultant · Detection Engineering &amp; AI Security</div>
 
         <div class="cv-info-row">
           <span class="cv-info-icon" aria-hidden="true">◎</span>
@@ -881,13 +956,16 @@ body::before {
       <div style="margin-bottom:2.5rem;">
         <h3 style="font-family:var(--display);font-size:1.4rem;font-weight:600;margin-bottom:1rem;">Background</h3>
         <p style="color:var(--text2);margin-bottom:1rem;font-size:0.95rem;">
-          I build, mature, and optimize Security Operations Centers — from detection engineering to team leadership. My work sits at the intersection of technical depth and operational strategy: writing Splunk use cases in the morning, reviewing analyst escalations by noon, and publishing cybersecurity research in the evening.
+          I am a cybersecurity professional specializing in Security Operations Center leadership, detection engineering, SOC maturity improvement, threat hunting, cyber threat intelligence, incident response, and emerging AI cybersecurity.
         </p>
         <p style="color:var(--text2);margin-bottom:1rem;font-size:0.95rem;">
-          I am currently working as a SOC Consultant and have been associated with Cisco for more than six years. Prior to my current role, I worked as a Senior SOC Analyst, where I handled advanced security investigations, supported incident response activities, performed threat hunting, and contributed to detection logic enhancement.
+          I currently work as a SOC Consultant, leading SOC operations across L1, L2, Splunk administration, and SIEM infrastructure functions. My work includes developing Splunk detection use cases, reviewing escalated incidents, improving alert quality, supporting DFIR investigations, and aligning SOC operations with customer, business, SLA, and regulatory requirements.
+        </p>
+        <p style="color:var(--text2);margin-bottom:1rem;font-size:0.95rem;">
+          I have been associated with Cisco for more than six years. Previously, I worked as a Senior SOC Analyst, where I handled advanced investigations, threat hunting activities, incident response support, malware analysis, and detection logic enhancement for managed security environments.
         </p>
         <p style="color:var(--text2);font-size:0.95rem;">
-          I specialize in SOC-CMM maturity assessments, risk-based alerting frameworks, DFIR investigations, and operationalizing cyber threat intelligence. I am actively contributing to the security community through LinkedIn publications and local chapter events (GISPP Riyadh).
+          I also focus on emerging AI cybersecurity areas, including LLM security, prompt injection risks, AI-assisted SOC operations, agentic AI security, and security monitoring challenges across modern AI infrastructure. My work spans hands-on detection engineering, analyst escalation review, incident investigation, SOC process improvement, AI security research, and cybersecurity publication.
         </p>
       </div>
 
@@ -900,12 +978,12 @@ body::before {
           <span style="color:var(--text3);font-size:0.7rem;margin-left:8px;line-height:10px;">sajid@soc ~ profile.sh</span>
         </div>
         <div class="terminal-line"><span class="cmd">$</span> <span class="val">whoami</span></div>
-        <div class="terminal-line" style="padding-left:1rem;color:var(--text2);">Sajid Kiani — SOC Lead, Detection Engineer, CTI Analyst</div>
+        <div class="terminal-line" style="padding-left:1rem;color:var(--text2);">Sajid Kiani — SOC Consultant, Detection Engineering &amp; AI Security Specialist</div>
         <div class="terminal-line" style="margin-top:0.8rem;"><span class="cmd">$</span> <span class="val">cat specializations.txt</span></div>
         <div class="terminal-line" style="padding-left:1rem;color:var(--accent2);">→ SOC Maturity (SOC-CMM) · Detection Engineering · Splunk SIEM</div>
         <div class="terminal-line" style="padding-left:1rem;color:var(--accent2);">→ DFIR · Threat Hunting · Malware Analysis</div>
         <div class="terminal-line" style="padding-left:1rem;color:var(--accent2);">→ Cyber Threat Intelligence · Risk-Based Alerting</div>
-        <div class="terminal-line" style="padding-left:1rem;color:var(--accent2);">→ Team Leadership · SOC L1/L2/L3 · Splunk Admin &amp; Infra</div>
+        <div class="terminal-line" style="padding-left:1rem;color:var(--accent2);">→ Team Leadership · SOC L1/L2 · Splunk Admin &amp; Infra</div>
         <div class="terminal-line" style="margin-top:0.8rem;"><span class="cmd">$</span> <span class="val">echo $LOCATION</span></div>
         <div class="terminal-line" style="padding-left:1rem;color:var(--text2);">Riyadh, KSA | Islamabad, Pakistan</div>
         <div class="terminal-line" style="margin-top:0.8rem;"><span class="cmd">$</span> <span class="val">echo $STATUS</span></div>
@@ -918,19 +996,19 @@ body::before {
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:2.5rem;">
         <div style="background:var(--surface);border:0.5px solid var(--border);border-left:2px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;">
           <div style="font-family:var(--mono);font-size:0.68rem;color:var(--accent);margin-bottom:0.4rem;">DETECTION</div>
-          <div style="font-size:0.88rem;color:var(--text2);">Engineered 15+ Splunk use cases using TSTATS &amp; IDS data model, reducing MTTD significantly</div>
+          <div style="font-size:0.88rem;color:var(--text2);">Improved detection efficiency through optimized Splunk use cases, data model-based correlation searches, and better alert prioritization</div>
         </div>
         <div style="background:var(--surface);border:0.5px solid var(--border);border-left:2px solid var(--accent2);padding:1rem 1.2rem;border-radius:0 6px 6px 0;">
           <div style="font-family:var(--mono);font-size:0.68rem;color:var(--accent2);margin-bottom:0.4rem;">MATURITY</div>
-          <div style="font-size:0.88rem;color:var(--text2);">Led SOC-CMM maturity uplift — drove team from Level 2 to Level 3 across key operational domains</div>
+          <div style="font-size:0.88rem;color:var(--text2);">Led SOC-CMM maturity improvement activities, supporting progression from Level 1 to Level 2 across key SOC operational domains</div>
         </div>
         <div style="background:var(--surface);border:0.5px solid var(--border);border-left:2px solid var(--accent3);padding:1rem 1.2rem;border-radius:0 6px 6px 0;">
           <div style="font-family:var(--mono);font-size:0.68rem;color:var(--accent3);margin-bottom:0.4rem;">ALERTING</div>
-          <div style="font-size:0.88rem;color:var(--text2);">Implemented Risk-Based Alerting framework, cutting false positive noise by ~40% across the SOC</div>
+          <div style="font-size:0.88rem;color:var(--text2);">Implemented Risk-Based Alerting to reduce false positive noise, improve alert prioritization, and support risk-driven investigations</div>
         </div>
         <div style="background:var(--surface);border:0.5px solid var(--border);border-left:2px solid var(--accent);padding:1rem 1.2rem;border-radius:0 6px 6px 0;">
           <div style="font-family:var(--mono);font-size:0.68rem;color:var(--accent);margin-bottom:0.4rem;">LEADERSHIP</div>
-          <div style="font-size:0.88rem;color:var(--text2);">Managing 4-tier SOC team: L1, L2 Analysts, Splunk Admin, and Splunk Infrastructure engineers</div>
+          <div style="font-size:0.88rem;color:var(--text2);">Leading a multi-function SOC team covering L1/L2 monitoring, escalation handling, Splunk administration, and SIEM infrastructure operations</div>
         </div>
       </div>
     </div>
@@ -949,13 +1027,14 @@ body::before {
       <h3 class="tl-role">SOC Consultant</h3>
       <div class="tl-org">Cisco · Riyadh, Saudi Arabia</div>
       <ul class="tl-bullets">
-        <li>Lead a 4-tier SOC team (L1, L2, Splunk Admin, Splunk Infra) for 24/7 enterprise telecom monitoring</li>
-        <li>Engineered 15+ Splunk detection use cases using TSTATS, Intrusion Detection data model, and summary indexing</li>
-        <li>Implemented Risk-Based Alerting (RBA) framework — reduced false positive rate by ~40%</li>
-        <li>Drove SOC-CMM maturity assessment, progressing team from Level 2 to Level 3</li>
-        <li>Onboarded Microsoft Defender telemetry into Splunk SIEM with prioritized log path ingestion</li>
-        <li>Serve as primary escalation for P1/P2 incidents — led DFIR investigations end-to-end</li>
-        <li>Align SOC operations with customer requirements and contractual SLAs</li>
+        <li>Lead SOC operations across L1/L2 monitoring, escalation handling, Splunk administration, and SIEM infrastructure functions</li>
+        <li>Develop and tune Splunk detection use cases using TSTATS, data models, summary indexing, and threat intelligence enrichment</li>
+        <li>Support Risk-Based Alerting implementation and tuning to reduce alert noise and improve investigation prioritization</li>
+        <li>Drive SOC-CMM maturity improvement activities across governance, people, process, and technology domains</li>
+        <li>Support onboarding of Microsoft Defender telemetry into Splunk with prioritized security log ingestion</li>
+        <li>Serve as escalation point for high-priority incidents, including DFIR investigation support and executive-level reporting</li>
+        <li>Align SOC operations with customer requirements, SLAs, regulatory expectations, and internal operational standards</li>
+        <li>Research AI cybersecurity risks, including LLM security, prompt injection, agentic AI workflows, GPU cloud security, and AI-assisted SOC monitoring scenarios</li>
       </ul>
     </article>
 
@@ -964,12 +1043,12 @@ body::before {
       <h3 class="tl-role">Senior Security Analyst</h3>
       <div class="tl-org">Cisco · Managed Security Services</div>
       <ul class="tl-bullets">
-        <li>Provided Tier 3 escalation for complex incidents across Cisco MSS client base (multi-sector)</li>
-        <li>Led threat hunting campaigns — identified APT-attributed activity in 3 client environments</li>
-        <li>Developed custom Splunk &amp; QRadar detection signatures for managed accounts</li>
-        <li>Performed static and dynamic malware analysis and produced executive-level threat intelligence reports</li>
-        <li>Mentored L1/L2 analysts — structured upskilling reduced escalation rate by 25%</li>
-        <li>Maintained operational MITRE ATT&amp;CK coverage mapping for client detection portfolios</li>
+        <li>Handled advanced security investigations and Tier 3 escalations across managed security service environments</li>
+        <li>Conducted threat hunting activities to identify suspicious behaviors, attack patterns, and high-risk indicators</li>
+        <li>Developed and tuned detection logic across Splunk and Carbon Black for managed customer environments</li>
+        <li>Supported malware analysis, incident response activities, and cyber threat intelligence reporting</li>
+        <li>Mentored L1/L2 analysts and improved escalation quality through structured guidance and investigation review</li>
+        <li>Maintained MITRE ATT&amp;CK mapping for detection coverage and threat hunting activities</li>
       </ul>
     </article>
 
@@ -1006,75 +1085,149 @@ body::before {
 
   <div class="skills-grid">
     <div class="skill-group">
-      <div class="skill-group-title">SOC &amp; Detection</div>
+      <div class="skill-group-title">Core Expertise</div>
       <div class="skill-tags">
+        <span class="skill-tag hot">SOC Operations &amp; Leadership</span>
         <span class="skill-tag hot">Detection Engineering</span>
-        <span class="skill-tag hot">SOC-CMM Framework</span>
         <span class="skill-tag hot">Risk-Based Alerting</span>
-        <span class="skill-tag">Alert Triage</span>
-        <span class="skill-tag">Incident Response</span>
-        <span class="skill-tag">SOC Maturity</span>
-        <span class="skill-tag">Blue Team Operations</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">SIEM &amp; Tooling</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">Splunk ES</span>
-        <span class="skill-tag hot">Splunk TSTATS</span>
-        <span class="skill-tag">Splunk Admin</span>
-        <span class="skill-tag">Splunk Infrastructure</span>
-        <span class="skill-tag">IBM QRadar</span>
-        <span class="skill-tag">Microsoft Defender</span>
-        <span class="skill-tag">MITRE ATT&amp;CK</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Threat &amp; Intelligence</div>
-      <div class="skill-tags">
-        <span class="skill-tag hot">Threat Hunting</span>
-        <span class="skill-tag hot">Cyber Threat Intelligence</span>
-        <span class="skill-tag">DFIR</span>
-        <span class="skill-tag">Malware Analysis</span>
-        <span class="skill-tag">OSINT</span>
-        <span class="skill-tag">IOC Analysis</span>
-        <span class="skill-tag">TTP Mapping</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Forensics</div>
-      <div class="skill-tags">
-        <span class="skill-tag fire">eCDFP (Digital Forensics)</span>
-        <span class="skill-tag">Memory Forensics</span>
-        <span class="skill-tag">Disk Forensics</span>
-        <span class="skill-tag">Network Forensics</span>
-        <span class="skill-tag">Log Analysis</span>
-        <span class="skill-tag">Artifact Analysis</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Leadership &amp; GRC</div>
-      <div class="skill-tags">
-        <span class="skill-tag">SOC Management</span>
-        <span class="skill-tag">Team Development</span>
-        <span class="skill-tag">SLA Management</span>
-        <span class="skill-tag">CISM</span>
-        <span class="skill-tag">Risk Management</span>
-        <span class="skill-tag">Security Architecture</span>
+        <span class="skill-tag hot">SOC-CMM Maturity Assessment</span>
+        <span class="skill-tag">Incident Response &amp; DFIR</span>
+        <span class="skill-tag">Threat Hunting</span>
+        <span class="skill-tag">Cyber Threat Intelligence</span>
+        <span class="skill-tag">Analyst Enablement</span>
         <span class="skill-tag">Playbook Development</span>
       </div>
     </div>
     <div class="skill-group">
-      <div class="skill-group-title">Emerging &amp; Research</div>
+      <div class="skill-group-title">Tools &amp; Platforms</div>
       <div class="skill-tags">
-        <span class="skill-tag hot">AI in Security (Local LLM)</span>
-        <span class="skill-tag hot">AI Security / GPU Cloud</span>
-        <span class="skill-tag">Agentic AI Security</span>
-        <span class="skill-tag">Kubernetes Security</span>
-        <span class="skill-tag">Prompt Injection Defense</span>
-        <span class="skill-tag">Security Research</span>
+        <span class="skill-tag hot">Splunk Enterprise Security</span>
+        <span class="skill-tag hot">Splunk TSTATS &amp; Data Models</span>
+        <span class="skill-tag">Splunk Admin &amp; Infrastructure</span>
+        <span class="skill-tag">Microsoft Defender</span>
+        <span class="skill-tag">Microsoft Fabric</span>
+        <span class="skill-tag">Snowflake</span>
+        <span class="skill-tag">IBM QRadar</span>
+        <span class="skill-tag">Carbon Black</span>
+        <span class="skill-tag">MITRE ATT&amp;CK</span>
+        <span class="skill-tag">Anomali ThreatStream</span>
+        <span class="skill-tag">Firewall / WAF / EDR / NDR</span>
       </div>
     </div>
+    <div class="skill-group">
+      <div class="skill-group-title">AI Cybersecurity &amp; Research</div>
+      <div class="skill-tags">
+        <span class="skill-tag hot">LLM Security</span>
+        <span class="skill-tag hot">Agentic AI Security</span>
+        <span class="skill-tag hot">Prompt Injection Defense</span>
+        <span class="skill-tag">AI-Assisted SOC Operations</span>
+        <span class="skill-tag">GPU Cloud Security</span>
+        <span class="skill-tag">Kubernetes Security</span>
+        <span class="skill-tag">AI Model &amp; Data Exposure Risks</span>
+        <span class="skill-tag">Secure AI Adoption</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<section id="services" aria-label="Services">
+  <div class="section-label">Services</div>
+  <h2 class="section-title">How I Can Help</h2>
+  <div class="section-line"></div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
+
+    <div class="skill-group" style="opacity:1;transform:none;">
+      <div class="skill-group-title">SOC Maturity &amp; Strategy</div>
+      <ul class="tl-bullets" style="margin-top:0.5rem;">
+        <li>SOC maturity assessment using SOC-CMM</li>
+        <li>SOC process improvement and playbook development</li>
+        <li>SOC team training and analyst enablement</li>
+      </ul>
+    </div>
+
+    <div class="skill-group" style="opacity:1;transform:none;">
+      <div class="skill-group-title">Detection Engineering</div>
+      <ul class="tl-bullets" style="margin-top:0.5rem;">
+        <li>Splunk detection engineering and use case development</li>
+        <li>Risk-Based Alerting design and tuning</li>
+        <li>Threat hunting program development</li>
+      </ul>
+    </div>
+
+    <div class="skill-group" style="opacity:1;transform:none;">
+      <div class="skill-group-title">Threat Intelligence &amp; IR</div>
+      <ul class="tl-bullets" style="margin-top:0.5rem;">
+        <li>CTI operationalization and IOC monitoring workflows</li>
+        <li>Incident response review and investigation support</li>
+      </ul>
+    </div>
+
+    <div class="skill-group" style="opacity:1;transform:none;">
+      <div class="skill-group-title">AI Security Advisory</div>
+      <ul class="tl-bullets" style="margin-top:0.5rem;">
+        <li>AI security research and advisory for SOC and enterprise security teams</li>
+        <li>LLM security risk review — prompt injection, data leakage, insecure tool use</li>
+        <li>AI-assisted SOC use case design — triage, enrichment, investigation summarization</li>
+        <li>Secure AI adoption for enterprise security operations</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="margin-top:2.5rem;text-align:center;">
+    <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1.5rem;">
+      Available for consulting engagements, advisory work, and speaking opportunities.
+    </p>
+    <a href="#contact" class="btn btn-primary">Get in Touch ↓</a>
+  </div>
+</section>
+
+<!-- ═══════════════════ FEATURED WORK ═══════════════════ -->
+<section id="featured" aria-label="Featured Work">
+  <div class="section-label">Selected Work</div>
+  <h2 class="section-title">Projects &amp; Initiatives</h2>
+  <div class="section-line"></div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;">
+
+    <div class="featured-card accent-cyan">
+      <div class="featured-card-cat cyan">SOC Maturity</div>
+      <h3>SOC-CMM Maturity Improvement</h3>
+      <p>Supported SOC maturity improvement activities across key operational domains — governance structures, analyst workflow optimization, detection coverage review, escalation quality improvement, and process documentation aligned to SOC-CMM requirements.</p>
+    </div>
+
+    <div class="featured-card accent-cyan">
+      <div class="featured-card-cat cyan">Detection Engineering</div>
+      <h3>Splunk Risk-Based Alerting Implementation</h3>
+      <p>Designed and tuned Risk-Based Alerting logic in Splunk Enterprise Security — improving alert prioritization, reducing noise through risk scoring and risk objects, and correlating user and asset behaviors into risk-driven investigations.</p>
+    </div>
+
+    <div class="featured-card accent-green">
+      <div class="featured-card-cat green">SIEM Integration</div>
+      <h3>Microsoft Defender to Splunk Log Onboarding</h3>
+      <p>Worked on prioritizing Microsoft Defender endpoint telemetry ingestion into Splunk — improving endpoint visibility, supporting detection use case development, and enhancing endpoint investigation coverage for SOC analysts.</p>
+    </div>
+
+    <div class="featured-card accent-green">
+      <div class="featured-card-cat green">Security Monitoring</div>
+      <h3>Data Analytics Platform Security Monitoring</h3>
+      <p>Developed security monitoring coverage for Microsoft Fabric and Snowflake environments — including data activity visibility, detection of abnormal access patterns and suspicious data movement, log onboarding into SIEM, and SOC use case development for data analytics platforms.</p>
+    </div>
+
+    <div class="featured-card accent-orange">
+      <div class="featured-card-cat orange">Threat Intelligence</div>
+      <h3>CTI-Driven IOC Monitoring</h3>
+      <p>Operationalized high-confidence IOC monitoring workflows — including SIEM correlation rules, historical log sweeps, tower-level threat reporting, and structured escalation handling for actionable threat intelligence findings.</p>
+    </div>
+
+    <div class="featured-card accent-orange">
+      <div class="featured-card-cat orange">AI Security Research</div>
+      <h3>AI Security Research &amp; SOC Enablement</h3>
+      <p>Researching AI cybersecurity risks including LLM security, prompt injection, agentic AI workflows, and GPU cloud security — with a focus on practical SOC use cases for AI-assisted triage, alert enrichment, and incident investigation summarization.</p>
+    </div>
+
   </div>
 </section>
 
@@ -1196,13 +1349,14 @@ body::before {
     <h2 class="section-title">Let's Connect</h2>
     <div class="section-line" style="margin:0 auto 2rem;"></div>
     <p style="color:var(--text2);margin-bottom:0.5rem;font-size:0.95rem;">
-      Available for SOC consulting, advisory engagements, speaking opportunities, and international roles.
+      Available for consulting, speaking, cybersecurity advisory, AI security research collaboration, and professional opportunities.
     </p>
-    <a href="https://www.linkedin.com/in/sajidkiani" target="_blank" rel="noopener noreferrer" class="contact-email">
-      linkedin.com/in/sajidkiani ↗
+    <a href="mailto:contact@sajidkiani.com" class="contact-email">
+      contact@sajidkiani.com ↗
     </a>
     <div class="social-row">
       <a href="https://www.linkedin.com/in/sajidkiani" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn profile">LinkedIn</a>
+      <a href="mailto:contact@sajidkiani.com" class="social-btn" aria-label="Send email">Email</a>
       <a href="https://sa.linkedin.com/in/sajidkiani/recent-activity/articles/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Published articles">Articles</a>
     </div>
   </div>
@@ -1210,7 +1364,7 @@ body::before {
 
 <!-- Footer -->
 <footer role="contentinfo">
-  <span>© 2026 Sajid Kiani · <a href="https://www.linkedin.com/in/sajidkiani" target="_blank" rel="noopener noreferrer">SOC Lead &amp; Detection Engineer</a></span>
+  <span>© 2026 Sajid Kiani · <a href="https://www.linkedin.com/in/sajidkiani" target="_blank" rel="noopener noreferrer">SOC Consultant · Detection Engineering · SOC Maturity · AI Security</a></span>
   <span style="font-family:var(--mono);font-size:0.65rem;">Built with Three.js · GSAP · Vanilla HTML</span>
 </footer>
 
@@ -1423,13 +1577,20 @@ function filterWriteups(cat) {
   });
 }
 
-/* ── Smooth scroll for nav links ── */
+/* ── Smooth scroll for nav links + close mobile menu ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const target = document.querySelector(a.getAttribute('href'));
     if (target) {
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const hamburger = document.querySelector('.nav-hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      if (hamburger && navLinks) {
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('open');
+      }
     }
   });
 });
